@@ -12,8 +12,7 @@
             font-family: Arial, sans-serif;
             background-color: #e0e0e0;
             color: #333;
-            transition: background-color 0.3s, color 0.3s;
-            overflow-x: hidden; /* Remove a rolagem lateral */
+            overflow: hidden; /* Remover rolagem da página */
         }
 
         body.dark-theme {
@@ -24,6 +23,8 @@
         .chat-container {
             display: flex;
             height: 100vh;
+            position: relative;
+            overflow: hidden; /* Remover rolagem da página */
         }
 
         .contact-list {
@@ -76,10 +77,9 @@
             background-color: #f5f5f5;
             display: flex;
             flex-direction: column;
-            padding-top: 0;
-            transition: background-color 0.3s;
-            height: 100vh; /* Ocupa 100% da altura da tela */
-
+            position: relative;
+            height: 100vh;
+            overflow: hidden; /* Remover rolagem da página */
         }
 
         .chat.dark-theme {
@@ -93,10 +93,10 @@
             padding: 12px;
             background-color: #525151;
             color: white;
-            flex-wrap: nowrap;
             position: sticky;
             top: 0;
             z-index: 5;
+            width: 100%;
         }
 
         .profile-header img {
@@ -109,14 +109,12 @@
             flex: 1;
             padding: 10px;
             overflow-y: auto;
-            height: calc(100vh - 160px);
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             gap: 15px;
-            overflow-x: hidden;
-            height: calc(100vh - 160px); /* Subtrai a altura dos elementos fixos (ex. cabeçalhos e rodapés) */
-}
-        
+            height: calc(100vh - 160px); /* Subtrai a altura dos elementos fixos (cabeçalho e rodapé) */
+        }
 
         .sent {
             background-color: #4682b4;
@@ -127,7 +125,6 @@
             padding: 12px 18px;
             max-width: 80%;
             font-size: 14px;
-            
         }
 
         .received {
@@ -155,23 +152,23 @@
             width: auto;
             max-width: 300px;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .media img, .media video {
             width: 100%;
             border-radius: 8px;
         }
-        .media audio{
-            padding-right: 45px;
-        }
-  
+
         .input-container {
             display: flex;
             align-items: center;
             padding: 12px;
             background-color: #646464;
             border-top: 1px solid #0e0c0c;
+            position: sticky;
+            bottom: 0;
+            width: 100%;
         }
 
         .input-container input {
@@ -195,58 +192,18 @@
             background-color: #4667ad;
         }
 
-        .modal-content {
-            padding: 20px;
-            border-radius: 8px;
-            background-color: #fff;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .modal-header {
-            background-color: #525151;
-            color: white;
-            padding: 15px 20px;
-            border-radius: 8px 8px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-body {
-            padding: 10px;
-            text-align: center;
-            border-top: 5px solid #525151;
-            border-left: 5px solid #525151; 
-            border-right: 5px solid #525151; 
-            border-bottom: 5px solid #525151;  
-            border-radius: 0 0 20px 20px; 
-        }
-
-        .close-btn {
-            background-color: #e74c3c;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
         .dark-mode-btn-container {
             text-align: center;
             padding: 15px;
         }
 
-        .modal-content {
-            max-width: 400px;
-            margin: auto;
-        }
-
-        .modal-body {
-            color: #333;
-        }
-
         .badge {
             font-size: 0.75em;
+        }
+
+        /* Modal */
+        .modal-backdrop.show {
+            z-index: 1050;
         }
     </style>
 </head>
@@ -303,7 +260,7 @@
             <div class="message sent">
                 <div class="media">
                     <audio controls>
-                        <source src="Rapaz ratinho - meme.mp3" type="audio/mp3">
+                        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
                     </audio>
                 </div>
             </div>
@@ -325,20 +282,20 @@
     </div>
 </div>
 
-<!-- Modal de detalhes do contato -->
+<!-- Modal de perfil -->
 <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="profileModalLabel">Detalhes do Contato</h5>
-                <button type="button" class="close-btn" data-bs-dismiss="modal" aria-label="Fechar">Fechar</button>
-            </div>
-            <div class="modal-body">
-                <p>Nome: <span id="modalName">Vendedor</span></p>
-                <p>Email: vendedor@empresa.com</p>
-            </div>
-        </div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="profileModalLabel">Perfil</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p id="modalName">Vendedor</p>
+        <!-- Mais informações do perfil podem ser colocadas aqui -->
+      </div>
     </div>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
