@@ -78,6 +78,8 @@
             display: flex;
             flex-direction: column;
             position: relative;
+            margin-top: 60px; /* Para dar espaço para o cabeçalho fixo */
+            margin-bottom: 80px; /* Para dar espaço para o campo de envio fixo */
             overflow-y: auto;
         }
 
@@ -92,8 +94,10 @@
             padding: 12px;
             background-color: #525151;
             color: white;
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 5;
             width: 100%;
         }
@@ -111,7 +115,7 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            height: calc(100vh - 160px); /* Subtrai a altura dos elementos fixos (cabeçalho e rodapé) */
+            padding-bottom: 80px; /* Garantir que a área de mensagens não sobreponha o campo de envio */
         }
 
         .sent {
@@ -164,8 +168,11 @@
             padding: 12px;
             background-color: #646464;
             border-top: 1px solid #0e0c0c;
-            position: sticky;
+            position: fixed;
             bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 5;
             width: 100%;
         }
 
@@ -234,7 +241,7 @@
 
             /* Ajustar o campo de mensagens e o cabeçalho para telas menores */
             .messages {
-                height: calc(100vh - 120px); /* Ajustar para que caiba a área de mensagens e o campo de entrada */
+                height: calc(100vh - 160px); /* Ajustar para que caiba a área de mensagens e o campo de entrada */
             }
         }
     </style>
@@ -417,28 +424,10 @@ function checkEnter(event) {
 // Adicionar notificação ao botão de contatos
 let notificationCount = 0;
 
-function addNotification() {
-    notificationCount++;
-    const badge = document.getElementById('notificationBadge');
-    badge.textContent = notificationCount;
-    badge.style.display = 'inline-block';
-}
-
-// Limpar notificações
 function clearNotifications() {
-    notificationCount = 0;
     const badge = document.getElementById('notificationBadge');
-    badge.textContent = notificationCount;
-    badge.style.display = 'none';
+    badge.style.display = notificationCount > 0 ? 'block' : 'none';
 }
-
-// Simular uma nova mensagem
-function simulateNewMessage() {
-    addNotification();
-}
-
-// Simulação: Simular que um contato enviou uma mensagem após 5 segundos
-setTimeout(simulateNewMessage, 2000); // Chama a função simulateNewMessage após 2 segundos
 </script>
 
 </body>
